@@ -1,7 +1,32 @@
+import { useState } from 'react';
+
 export default function Detail() {
+  const images = [
+    'https://images.unsplash.com/photo-1505691938895-1758d7feb511',
+    'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267',
+    'https://images.unsplash.com/photo-1493809842364-78817add7ffb',
+    'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688',
+  ];
+
+  const [isOpen, setIsOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const openModal = (index) => {
+    setCurrentIndex(index);
+    setIsOpen(true);
+  };
+
+  const nextImage = () => {
+    setCurrentIndex((prev) => (prev + 1) % images.length);
+  };
+
+  const prevImage = () => {
+    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+
   return (
     <>
-      {/* 🔥 NAVBAR */}
+      {/* NAVBAR */}
       <nav className="bg-white shadow-sm">
         <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
           <h1 className="text-2xl font-bold text-emerald-700">StayScape</h1>
@@ -11,7 +36,7 @@ export default function Detail() {
         </div>
       </nav>
 
-      {/* 🌄 HERO IMAGE */}
+      {/* HERO IMAGE */}
       <section className="relative h-[500px]">
         <img
           src="https://images.unsplash.com/photo-1505691938895-1758d7feb511"
@@ -27,9 +52,9 @@ export default function Detail() {
         </div>
       </section>
 
-      {/* 🏡 MAIN CONTENT */}
+      {/* MAIN CONTENT */}
       <section className="max-w-6xl mx-auto px-6 py-16 grid lg:grid-cols-3 gap-12">
-        {/* 📝 LEFT SIDE - DESCRIPTION */}
+        {/* LEFT SIDE - DESCRIPTION */}
         <div className="lg:col-span-2">
           <h3 className="text-3xl font-bold mb-6 text-gray-800">About This Lodge</h3>
 
@@ -72,7 +97,7 @@ export default function Detail() {
           </div>
         </div>
 
-        {/* 💳 RIGHT SIDE - BOOKING CARD */}
+        {/* RIGHT SIDE - BOOKING CARD */}
         <div className="bg-white rounded-2xl shadow-xl p-8 h-fit sticky top-24">
           <div className="text-3xl font-bold text-emerald-600 mb-4">
             $180 <span className="text-base text-gray-400 font-normal">/ night</span>
@@ -90,28 +115,45 @@ export default function Detail() {
         </div>
       </section>
 
-      {/* 🖼 GALLERY SECTION */}
+      {/* GALLERY SECTION */}
       <section className="max-w-7xl mx-auto px-6 pb-16">
         <h3 className="text-2xl font-bold mb-6">Gallery</h3>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-          <img
-            src="https://images.unsplash.com/photo-1505691938895-1758d7feb511"
-            className="rounded-xl h-40 w-full object-cover"
-          />
-          <img
-            src="https://images.unsplash.com/photo-1522708323590-d24dbb6b0267"
-            className="rounded-xl h-40 w-full object-cover"
-          />
-          <img
-            src="https://images.unsplash.com/photo-1493809842364-78817add7ffb"
-            className="rounded-xl h-40 w-full object-cover"
-          />
-          <img
-            src="https://images.unsplash.com/photo-1502672260266-1c1ef2d93688"
-            className="rounded-xl h-40 w-full object-cover"
-          />
+          {images.map((img, index) => (
+            <img
+              key={index}
+              src={img}
+              onClick={() => openModal(index)}
+              className="rounded-xl h-40 w-full object-cover cursor-pointer hover:scale-105 transition"
+            />
+          ))}
         </div>
       </section>
+
+      {isOpen && (
+        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
+          {/* Close */}
+          <button
+            onClick={() => setIsOpen(false)}
+            className="absolute top-6 right-6 text-white text-3xl hover:scale-150 transition"
+          >
+            <b>✕</b>
+          </button>
+
+          {/* Prev */}
+          <button onClick={prevImage} className="absolute left-6 text-white text-4xl hover:scale-150 transition">
+            <b>⮜</b>
+          </button>
+
+          {/* Image */}
+          <img src={images[currentIndex]} className="max-h-[80vh] max-w-[90vw] rounded-xl" />
+
+          {/* Next */}
+          <button onClick={nextImage} className="absolute right-6 text-white text-4xl hover:scale-150 transition">
+            <b>⮞</b>
+          </button>
+        </div>
+      )}
 
       {/* 🦶 FOOTER */}
       <footer className="bg-gray-900 text-gray-400 text-center py-6">
