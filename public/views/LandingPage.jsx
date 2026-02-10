@@ -1,4 +1,18 @@
+import { useRef } from 'react';
+
 export default function LandingPage() {
+  const scrollRef = useRef(null);
+
+  const scroll = (direction) => {
+    const container = scrollRef.current;
+    const scrollAmount = 380;
+
+    container.scrollBy({
+      left: direction === 'left' ? -scrollAmount : scrollAmount,
+      behavior: 'smooth',
+    });
+  };
+
   return (
     <>
       {/* 🌌 HERO SECTION */}
@@ -40,30 +54,54 @@ export default function LandingPage() {
       </section>
 
       {/* 🌿 IMAGE SHOWCASE SECTION */}
-      <section id="discover" className="py-24 bg-gray-50">
+      <section id="discover" className="py-24 bg-gray-50 relative">
         <div className="max-w-6xl mx-auto px-6 text-center mb-16">
           <h2 className="text-4xl font-bold mb-4">Curated Escapes</h2>
           <p className="text-gray-600">From mountain hideaways to beachfront sanctuaries.</p>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto px-6">
-          <div className="overflow-hidden rounded-2xl shadow-lg group">
-            <img
-              src="https://images.unsplash.com/photo-1505691723518-36a5ac3be353"
-              className="h-80 w-full object-cover group-hover:scale-110 transition duration-500"
-            />
+
+        <div className="relative max-w-6xl mx-auto px-6">
+          {/* Left Button */}
+          <button
+            onClick={() => scroll('left')}
+            className="absolute -left-6 top-1/2 -translate-y-1/2 bg-white shadow-md rounded-full p-4 hover:bg-gray-100 z-10"
+          >
+            ←
+          </button>
+
+          {/* Slider */}
+          <div ref={scrollRef} className="flex gap-8 overflow-hidden">
+            {[
+              'https://images.unsplash.com/photo-1505691723518-36a5ac3be353',
+              'https://images.unsplash.com/photo-1505691938895-1758d7feb511',
+              'https://images.unsplash.com/photo-1493809842364-78817add7ffb',
+              'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267',
+              'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688',
+              'https://plus.unsplash.com/premium_photo-1687960116497-0dc41e1808a2?q=80&w=1171&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+              'https://images.unsplash.com/photo-1566073771259-6a8506099945?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+              'https://images.unsplash.com/photo-1615880484746-a134be9a6ecf?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+              'https://images.unsplash.com/photo-1596436889106-be35e843f974?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+              'https://images.unsplash.com/photo-1596178067639-5c6e68aea6dc?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+              'https://images.unsplash.com/photo-1445019980597-93fa8acb246c?q=80&w=1174&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+              'https://plus.unsplash.com/premium_photo-1661962821338-c07da63995f9?q=80&w=1332&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+            ].map((img, index) => (
+              <div key={index} className="min-w-[350px] h-80 rounded-2xl overflow-hidden shadow-lg group flex-shrink-0">
+                <img
+                  src={img}
+                  className="w-full h-full object-cover group-hover:scale-110 transition duration-500"
+                  alt="Lodge scenery"
+                />
+              </div>
+            ))}
           </div>
-          <div className="overflow-hidden rounded-2xl shadow-lg group">
-            <img
-              src="https://images.unsplash.com/photo-1505691938895-1758d7feb511"
-              className="h-80 w-full object-cover group-hover:scale-110 transition duration-500"
-            />
-          </div>
-          <div className="overflow-hidden rounded-2xl shadow-lg group">
-            <img
-              src="https://images.unsplash.com/photo-1493809842364-78817add7ffb"
-              className="h-80 w-full object-cover group-hover:scale-110 transition duration-500"
-            />
-          </div>
+
+          {/* Right Button */}
+          <button
+            onClick={() => scroll('right')}
+            className="absolute -right-6 top-1/2 -translate-y-1/2 bg-white shadow-md rounded-full p-4 hover:bg-gray-100 z-10"
+          >
+            →
+          </button>
         </div>
       </section>
 
@@ -80,7 +118,9 @@ export default function LandingPage() {
       </section>
 
       {/* 🦶 FOOTER */}
-      <footer className="bg-gray-900 text-gray-400 text-center py-6">© 2026 StayScape. Crafted for dreamers.</footer>
+      <footer className="bg-gray-900 text-gray-400 text-center py-6">
+        © 2026 StayScape. Crafted for unforgettable escapes.
+      </footer>
     </>
   );
 }
