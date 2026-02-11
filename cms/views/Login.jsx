@@ -1,6 +1,70 @@
 import Button from '../components/Button';
+import Toastify from 'toastify-js';
+import { Navigate, useNavigate } from 'react-router';
+import { useState } from 'react';
+import axios from 'axios';
 
 export default function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  async function handleLogin(e) {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post('https://challenge.rundevrun.online/login', { email, password });
+
+      localStorage.setItem('access_token', data.access_token);
+
+      navigate('/products');
+
+      Toastify({
+        text: 'Login success',
+        duration: 3000,
+        newWindow: true,
+        close: true,
+        gravity: 'top', // `top` or `bottom`
+        position: 'center', // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+          background: '#34D399',
+          color: '#000000',
+        },
+      }).showToast();
+    } catch (error) {
+      Toastify({
+        text: error.response.data.message,
+        duration: 3000,
+        newWindow: true,
+        close: true,
+        gravity: 'top', // `top` or `bottom`
+        position: 'center', // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+          background: '#F87171',
+          color: 'white',
+        },
+      }).showToast();
+    }
+  }
+
+  if (localStorage.access_token) {
+    Toastify({
+      text: 'You are already logged in',
+      duration: 3000,
+      newWindow: true,
+      close: true,
+      gravity: 'bottom', // `top` or `bottom`
+      position: 'right', // `left`, `center` or `right`
+      stopOnFocus: true, // Prevents dismissing of toast on hover
+      style: {
+        background: '#F87171',
+        color: '#000000',
+      },
+    }).showToast();
+    return <Navigate to="/products" />;
+  }
+
   return (
     <section
       className="min-vh-100 d-flex align-items-center py-5"
@@ -41,7 +105,7 @@ export default function Login() {
 
               {/* Form Side */}
               <div className="col-md-6 p-5">
-                <form>
+                <form onSubmit={handleLogin}>
                   <h2
                     className="fw-bold mb-3"
                     style={{
@@ -66,6 +130,7 @@ export default function Login() {
                       className="form-control rounded-3"
                       id="login-email"
                       placeholder="Enter email address..."
+                      onChange={(e) => setEmail(e.target.value)}
                       required
                     />
                   </div>
@@ -79,6 +144,7 @@ export default function Login() {
                       className="form-control rounded-3"
                       id="login-password"
                       placeholder="Enter your password..."
+                      onChange={(e) => setPassword(e.target.value)}
                       required
                     />
                   </div>

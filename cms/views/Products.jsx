@@ -1,47 +1,47 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { NavLink } from 'react-router';
+import PreLoader from '../components/PreLoader';
 
 export default function Products() {
   const [products, setProducts] = useState([]);
-  const [page, setpage] = useState(1);
-  const [search, setSearch] = useState('');
-  const [sort, setSort] = useState('ASC');
-  const [typeId, setTypeId] = useState();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const { data } = await axios.get('http://challenge.rundevrun.online/pub?page=1&search=');
+        const token = localStorage.getItem('access_token');
+        const { data } = await axios.get('https://challenge.rundevrun.online/lodging', {
+          headers: { Authorization: `Bearer ${token}` },
+        });
 
         setProducts(data.data);
       } catch (error) {
         console.log(error);
+      } finally {
+        setLoading(false);
       }
     }
 
     fetchProducts();
   }, []);
 
+  if (loading) return <PreLoader />;
+
   return (
     <section
       className="col-md-9 ms-sm-auto col-lg-10 px-md-4 min-vh-100 py-4"
-      style={{
-        background: 'linear-gradient(135deg,#fff9db,#ffe066)',
-      }}
+      style={{ background: 'linear-gradient(135deg,#fff9db,#ffe066)' }}
       id="product-section"
     >
+      {/* Header */}
       <div className="d-flex justify-content-between align-items-center mb-4">
-        <h1
-          className="fw-bold"
-          style={{
-            fontSize: '2.5rem',
-            color: '#b08900',
-          }}
-        >
+        <h1 className="fw-bold" style={{ fontSize: '2.5rem', color: '#b08900' }}>
           ☀ Products
         </h1>
 
-        <button
+        <NavLink
+          to="/add"
           className="btn rounded-pill px-4 fw-semibold shadow"
           style={{
             background: 'linear-gradient(90deg,#f59f00,#fab005)',
@@ -51,17 +51,14 @@ export default function Products() {
         >
           <span className="material-symbols-outlined align-middle me-1">add</span>
           New Product
-        </button>
+        </NavLink>
       </div>
 
+      {/* Products Table */}
       <div className="card shadow-lg border-0 rounded-4">
         <div className="card-body table-responsive p-4">
-          <table className="table align-middle table-hover">
-            <thead
-              style={{
-                backgroundColor: '#fff3bf',
-              }}
-            >
+          <table className="table align-middle table-hover text-center">
+            <thead style={{ backgroundColor: '#fff3bf' }}>
               <tr>
                 <th>#</th>
                 <th>Name</th>
@@ -69,8 +66,7 @@ export default function Products() {
                 <th width="250px">Facility</th>
                 <th>Capacity</th>
                 <th>Price</th>
-                <th>Author</th>
-                <th />
+                <th>Action</th>
               </tr>
             </thead>
 
@@ -98,15 +94,35 @@ export default function Products() {
 
                   <td>{item.roomCapacity}</td>
 
-                  <td className="fw-bold text-warning">Rp{item.price.toLocaleString('id-ID')}</td>
-
-                  <td className="text-muted">{item.User?.email}</td>
+                  <td className="fw-bold text-success">Rp {item.price.toLocaleString('id-ID')}</td>
 
                   <td>
-                    <div className="d-flex gap-2">
-                      <span className="material-symbols-outlined text-danger">delete</span>
-                      <span className="material-symbols-outlined text-warning">edit</span>
-                      <span className="material-symbols-outlined text-secondary">image</span>
+                    <div className="d-flex justify-content-center gap-2">
+                      {/* Delete */}
+                      <button
+                        className="btn btn-sm btn-danger d-flex align-items-center justify-content-center rounded-circle shadow-sm"
+                        title="Delete"
+                      >
+                        <span className="material-symbols-outlined">delete</span>
+                      </button>
+
+                      {/* Edit */}
+                      <NavLink
+                        to={`/edit/${item.id}`}
+                        className="btn btn-sm btn-warning d-flex align-items-center justify-content-center rounded-circle shadow-sm"
+                        title="Edit"
+                      >
+                        <span className="material-symbols-outlined">edit</span>
+                      </NavLink>
+
+                      {/* Upload */}
+                      <NavLink
+                        to={`/upload/${item.id}`}
+                        className="btn btn-sm btn-secondary d-flex align-items-center justify-content-center rounded-circle shadow-sm"
+                        title="Upload Image"
+                      >
+                        <span className="material-symbols-outlined">upload</span>
+                      </NavLink>
                     </div>
                   </td>
                 </tr>
