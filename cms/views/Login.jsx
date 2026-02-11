@@ -2,65 +2,94 @@ import Button from '../components/Button';
 
 export default function Login() {
   return (
-    <section className="container" id="login-section">
-      <div className="row">
-        <div className="col-12 text-center">
-          <h1 className="mb-3 mt-5">Login Options</h1>
-          <span>
+    <section
+      className="min-vh-100 d-flex align-items-center py-5"
+      style={{
+        background: 'linear-gradient(135deg, #1e293b 0%, #0f172a 100%)',
+      }}
+    >
+      <div className="container">
+        {/* Title */}
+        <div className="text-center text-white mb-5">
+          <h1 className="fw-bold" style={{ fontSize: '2.5rem', letterSpacing: '1px' }}>
+            Welcome Back
+          </h1>
+          <p className="opacity-75 mb-0">
             Log in and autocomplete your order with your personal data, or sign up to enjoy all the benefits of an IDEA
             account.
-          </span>
+          </p>
         </div>
-        <div className="col-12 col-lg-8 offset-lg-2 my-5">
-          <div className="row">
-            <div className="col-12 col-md-6 border-end p-5 text-left">
-              <img
-                src="https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/561/1056141_PE848273_S4.webp"
-                width="350px"
-                alt="sofa"
-              />
-            </div>
-            <div className="col-12 col-md-6 p-5 text-left">
-              <div className="form-signin m-auto">
-                <form id="login-form">
-                  <h1 className="h3 mb-3 display-1">Log in to your account</h1>
-                  <span>Log in on your profile to autocomplete your purchase order with your personal data.</span>
-                  <div className="mb-3 mt-3">
-                    <div className="d-flex justify-content-between">
-                      <label htmlFor="login-email">Email</label>
-                      <label className="text-danger text-end fw-bold">*</label>
-                    </div>
+
+        {/* Card Wrapper */}
+        <div className="row justify-content-center">
+          <div className="col-12 col-lg-10 col-xl-9">
+            <div
+              className="row g-0 rounded-4 overflow-hidden shadow-lg"
+              style={{
+                background: 'rgba(255,255,255,0.95)',
+                backdropFilter: 'blur(10px)',
+              }}
+            >
+              {/* Image Side */}
+              <div className="col-md-6 d-flex align-items-center justify-content-center p-5 border-end">
+                <img
+                  src="https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/561/1056141_PE848273_S4.webp"
+                  className="img-fluid rounded-4 shadow-sm"
+                  alt="sofa"
+                />
+              </div>
+
+              {/* Form Side */}
+              <div className="col-md-6 p-5">
+                <form>
+                  <h2
+                    className="fw-bold mb-3"
+                    style={{
+                      background: 'linear-gradient(90deg,#6366f1,#8b5cf6)',
+                      WebkitBackgroundClip: 'text',
+                      WebkitTextFillColor: 'transparent',
+                    }}
+                  >
+                    Log in to your account
+                  </h2>
+
+                  <p className="text-muted small">
+                    Log in to autocomplete your purchase order with your personal data.
+                  </p>
+
+                  <div className="mb-3">
+                    <label htmlFor="login-email" className="form-label fw-semibold">
+                      Email <span className="text-danger">*</span>
+                    </label>
                     <input
                       type="email"
-                      className="form-control"
+                      className="form-control rounded-3"
                       id="login-email"
-                      placeholder="Enter email address ..."
-                      autoComplete="off"
-                      required=""
+                      placeholder="Enter email address..."
+                      required
                     />
                   </div>
+
                   <div className="mb-4">
-                    <div className="d-flex justify-content-between">
-                      <label htmlFor="login-password">Password</label>
-                      <label className="text-danger text-end fw-bold">*</label>
-                    </div>
+                    <label htmlFor="login-password" className="form-label fw-semibold">
+                      Password <span className="text-danger">*</span>
+                    </label>
                     <input
                       type="password"
-                      className="form-control"
+                      className="form-control rounded-3"
                       id="login-password"
-                      placeholder="Enter your password ..."
-                      autoComplete="off"
-                      required=""
+                      placeholder="Enter your password..."
+                      required
                     />
                   </div>
-                  <div className="checkbox mb-3">
-                    <div className="form-check">
-                      <input className="form-check-input" type="checkbox" defaultValue="" id="login-remember" />
-                      <label className="form-check-label" htmlFor="login-remember">
-                        Remember me
-                      </label>
-                    </div>
+
+                  <div className="form-check mb-4">
+                    <input className="form-check-input" type="checkbox" id="login-remember" />
+                    <label className="form-check-label" htmlFor="login-remember">
+                      Remember me
+                    </label>
                   </div>
+
                   <Button tag={'login'} />
                 </form>
               </div>

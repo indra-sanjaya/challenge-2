@@ -1,140 +1,116 @@
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
 export default function Products() {
+  const [products, setProducts] = useState([]);
+  const [page, setpage] = useState(1);
+  const [search, setSearch] = useState('');
+  const [sort, setSort] = useState('ASC');
+  const [typeId, setTypeId] = useState();
+
+  useEffect(() => {
+    async function fetchProducts() {
+      try {
+        const { data } = await axios.get('http://challenge.rundevrun.online/pub?page=1&search=');
+
+        setProducts(data.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchProducts();
+  }, []);
+
   return (
-    <section className="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="product-section">
-      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-        <h1 className="display-2">Products</h1>
-        <button className="btn btn-primary rounded-pill" id="new-product">
-          <span className="icon material-symbols-outlined">add</span>New Product
+    <section
+      className="col-md-9 ms-sm-auto col-lg-10 px-md-4 min-vh-100 py-4"
+      style={{
+        background: 'linear-gradient(135deg,#fff9db,#ffe066)',
+      }}
+      id="product-section"
+    >
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h1
+          className="fw-bold"
+          style={{
+            fontSize: '2.5rem',
+            color: '#b08900',
+          }}
+        >
+          ☀ Products
+        </h1>
+
+        <button
+          className="btn rounded-pill px-4 fw-semibold shadow"
+          style={{
+            background: 'linear-gradient(90deg,#f59f00,#fab005)',
+            color: 'white',
+            border: 'none',
+          }}
+        >
+          <span className="material-symbols-outlined align-middle me-1">add</span>
+          New Product
         </button>
       </div>
-      <div className="row">
-        <div className="col-12 table-responsive">
-          <table className="table align-middle">
-            <thead>
+
+      <div className="card shadow-lg border-0 rounded-4">
+        <div className="card-body table-responsive p-4">
+          <table className="table align-middle table-hover">
+            <thead
+              style={{
+                backgroundColor: '#fff3bf',
+              }}
+            >
               <tr>
-                <th scope="col">#</th>
-                <th scope="col">Name</th>
-                <th scope="col" width="180px">
-                  Image
-                </th>
-                <th scope="col" width="250px">
-                  Description
-                </th>
-                <th scope="col">Stock</th>
-                <th scope="col">Price</th>
-                <th scope="col">Author</th>
-                <th scope="col" width="50px" />
+                <th>#</th>
+                <th>Name</th>
+                <th width="160px">Image</th>
+                <th width="250px">Facility</th>
+                <th>Capacity</th>
+                <th>Price</th>
+                <th>Author</th>
+                <th />
               </tr>
             </thead>
-            <tbody id="table-product">
-              <tr>
-                <td scope="row">#1</td>
-                <td className="fw-bold">MILLBERGET</td>
-                <td>
-                  <img
-                    src="https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/201/1020142_PE831799_S4.jpg"
-                    className="img-fluid"
-                  />
-                </td>
-                <td>Swivel chair, murum black</td>
-                <td>13</td>
-                <td className="fw-bold">Rp1.599.000</td>
-                <td>admin@mail.com</td>
-                <td>
-                  <span className="d-flex">
-                    <a href="" className="ms-3">
-                      <span className="icon material-symbols-outlined text-danger">delete</span>
-                    </a>
-                    <a href="" className="ms-3">
-                      <span className="icon material-symbols-outlined text-danger">edit</span>
-                    </a>
-                    <a href="" className="ms-3">
-                      <span className="icon material-symbols-outlined text-danger">image</span>
-                    </a>
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td scope="row">#2</td>
-                <td className="fw-bold">MICKE</td>
-                <td>
-                  <img
-                    src="https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/359/0735981_PE740299_S4.jpg"
-                    className="img-fluid"
-                  />
-                </td>
-                <td>Desk, black-brown, 105x50 cm</td>
-                <td>30</td>
-                <td className="fw-bold">Rp1.799.000</td>
-                <td>admin@mail.com</td>
-                <td>
-                  <span className="d-flex">
-                    <a href="" className="ms-3">
-                      <span className="icon material-symbols-outlined text-danger">delete</span>
-                    </a>
-                    <a href="" className="ms-3">
-                      <span className="icon material-symbols-outlined text-danger">edit</span>
-                    </a>
-                    <a href="" className="ms-3">
-                      <span className="icon material-symbols-outlined text-danger">image</span>
-                    </a>
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td scope="row">#3</td>
-                <td className="fw-bold">ALEX</td>
-                <td>
-                  <img
-                    src="https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/777/0977775_PE813763_S3.jpg"
-                    className="img-fluid"
-                  />
-                </td>
-                <td>drawer unit, white, 36x70 cm</td>
-                <td>12</td>
-                <td className="fw-bold">Rp1.370.000</td>
-                <td>admin@mail.com</td>
-                <td>
-                  <span className="d-flex">
-                    <a href="" className="ms-3">
-                      <span className="icon material-symbols-outlined text-danger">delete</span>
-                    </a>
-                    <a href="" className="ms-3">
-                      <span className="icon material-symbols-outlined text-danger">edit</span>
-                    </a>
-                    <a href="" className="ms-3">
-                      <span className="icon material-symbols-outlined text-danger">image</span>
-                    </a>
-                  </span>
-                </td>
-              </tr>
-              <tr>
-                <td scope="row">#4</td>
-                <td className="fw-bold">SOCKERBIT</td>
-                <td>
-                  <img
-                    src="https://d2xjmi1k71iy2m.cloudfront.net/dairyfarm/id/images/290/1029026_PE835627_S3.jpg"
-                    className="img-fluid"
-                  />
-                </td>
-                <td>Storage box with lid, grey-green, 19x26x15 cm</td>
-                <td>42</td>
-                <td className="fw-bold">Rp59.900</td>
-                <td>admin@mail.com</td>
-                <td>
-                  <span className="d-flex">
-                    <a href="" className="ms-3">
-                      <span className="icon material-symbols-outlined text-danger">delete</span>
-                    </a>
-                    <a href="" className="ms-3">
-                      <span className="icon material-symbols-outlined text-danger">edit</span>
-                    </a>
-                    <a href="" className="ms-3">
-                      <span className="icon material-symbols-outlined text-danger">image</span>
-                    </a>
-                  </span>
-                </td>
-              </tr>
+
+            <tbody>
+              {products.map((item, index) => (
+                <tr key={item.id} style={{ cursor: 'pointer' }}>
+                  <td>{index + 1}</td>
+
+                  <td className="fw-semibold text-dark">{item.name}</td>
+
+                  <td>
+                    <img
+                      src={item.imgUrl}
+                      alt={item.name}
+                      style={{
+                        width: '120px',
+                        height: '80px',
+                        objectFit: 'cover',
+                        borderRadius: '12px',
+                      }}
+                    />
+                  </td>
+
+                  <td className="text-muted small">{item.facility}</td>
+
+                  <td>{item.roomCapacity}</td>
+
+                  <td className="fw-bold text-warning">Rp{item.price.toLocaleString('id-ID')}</td>
+
+                  <td className="text-muted">{item.User?.email}</td>
+
+                  <td>
+                    <div className="d-flex gap-2">
+                      <span className="material-symbols-outlined text-danger">delete</span>
+                      <span className="material-symbols-outlined text-warning">edit</span>
+                      <span className="material-symbols-outlined text-secondary">image</span>
+                    </div>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

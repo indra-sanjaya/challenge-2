@@ -14,12 +14,12 @@ function App() {
   return (
     <>
       <PreLoader />
-      <Navbar />
       <Login />
 
       {/* Home Section */}
       <section className="container-fluid" id="home-section">
         <div className="row">
+          <Navbar />
           <Sidebar />
           <Products />
           <AddProduct />

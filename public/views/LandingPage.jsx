@@ -1,4 +1,5 @@
 import { useRef } from 'react';
+import { NavLink } from 'react-router';
 
 export default function LandingPage() {
   const scrollRef = useRef(null);
@@ -37,12 +38,12 @@ export default function LandingPage() {
           </p>
           <div className="flex gap-6">
             {/* Primary Button */}
-            <a
-              href="/home"
+            <NavLink
+              to="/home"
               className="bg-emerald-600 px-8 py-4 rounded-full text-lg font-semibold hover:bg-emerald-700 transition transform hover:scale-105 shadow-lg"
             >
               Explore Lodges
-            </a>
+            </NavLink>
             {/* Secondary Button */}
             <a
               href="#discover"

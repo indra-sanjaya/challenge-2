@@ -2,30 +2,46 @@ import Button from '../components/Button';
 
 export default function Upload() {
   return (
-    <>
-      <section className="col-md-9 ms-sm-auto col-lg-10 px-md-4" id="update-product-section">
-        <div className="row">
-          <div className="col-12 col-md-6">
-            <div className="pt-3 pb-2 mb-3">
-              <form id="register-form">
-                <h1 className="h3 mb-3 display-1">Update Image</h1>
-                <div class="mb-3">
-                  <div className="input-group mb-3">
-                    <input
-                      type="file"
-                      className="form-control pb-2"
-                      id="inputGroupFile02"
-                      autoComplete="off"
-                      required=""
-                    />
-                  </div>
-                  <Button tag={'upload'} />
-                </div>
-              </form>
+    <section
+      className="col-md-9 ms-sm-auto col-lg-10 px-md-5 py-5 min-vh-100"
+      style={{
+        background: 'linear-gradient(135deg, #fdf2f8 0%, #fce7f3 100%)',
+      }}
+    >
+      <div className="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-3 mb-4">
+        <h1
+          className="fw-bold"
+          style={{
+            fontSize: '2.5rem',
+            background: 'linear-gradient(90deg,#db2777,#ec4899)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+          }}
+        >
+          Update Product Image
+        </h1>
+      </div>
+
+      <div className="d-flex justify-content-center mt-5">
+        <div
+          className="card shadow-lg border-0 rounded-4 p-5"
+          style={{
+            width: '500px',
+          }}
+        >
+          <form>
+            <div className="mb-4">
+              <label className="form-label fw-semibold text-secondary">Select Image File</label>
+
+              <input type="file" className="form-control" required />
             </div>
-          </div>
+
+            <div className="d-grid">
+              <Button tag={'upload'} />
+            </div>
+          </form>
         </div>
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
