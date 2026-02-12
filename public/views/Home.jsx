@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router';
 import Navbar from '../components/Navbar';
+import LodgeCard from '../components/Cards';
 
 export default function Home() {
   const [lodges, setLodges] = useState([]);
@@ -17,13 +18,11 @@ export default function Home() {
     async function fetchTypes() {
       try {
         const { data } = await axios.get('http://challenge.rundevrun.online/pub/type');
-
         setTypes(data.data);
       } catch (error) {
         console.log(error);
       }
     }
-
     fetchTypes();
   }, []);
 
@@ -33,20 +32,19 @@ export default function Home() {
         const { data } = await axios.get('http://challenge.rundevrun.online/pub', {
           params: { page, search, sort, typeId },
         });
-
         setLodges(data.data);
         setTotalPage(data.totalPage);
       } catch (error) {
         console.log(error);
       }
     }
-
     fetchLodges();
   }, [page, search, sort, typeId]);
 
   return (
     <>
       <Navbar />
+
       {/* 🌄 HERO SECTION */}
       <section
         className="relative bg-cover bg-center h-[500px]"
@@ -65,9 +63,9 @@ export default function Home() {
         </div>
       </section>
 
+      {/* 🔎 SEARCH & FILTER */}
       <section className="max-w-7xl mx-auto px-6 -mt-16 relative z-10">
         <div className="bg-white/90 backdrop-blur-lg shadow-xl rounded-3xl p-6 flex flex-col md:flex-row gap-4 items-center justify-between">
-          {/* 🔎 Search */}
           <div className="flex items-center bg-gray-100 rounded-full px-4 py-2 w-full md:w-1/2">
             <span className="text-gray-400 mr-2">🔍</span>
             <input
@@ -82,9 +80,7 @@ export default function Home() {
             />
           </div>
 
-          {/* Right side controls */}
           <div className="flex gap-3 w-full md:w-auto">
-            {/* Sort */}
             <select
               value={sort}
               onChange={(e) => {
@@ -97,7 +93,6 @@ export default function Home() {
               <option value="desc">Newest</option>
             </select>
 
-            {/* Filter */}
             <select
               value={typeId}
               onChange={(e) => {
@@ -107,7 +102,6 @@ export default function Home() {
               className="bg-gray-100 px-4 py-2 rounded-full outline-none hover:bg-gray-200 transition"
             >
               <option value="">All Types</option>
-
               {types.map((type) => (
                 <option key={type.id} value={type.id}>
                   {type.name}
@@ -121,39 +115,13 @@ export default function Home() {
       {/* 🏡 LODGE CARDS */}
       <section className="max-w-7xl mx-auto px-6 py-16">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-          {lodges.map((item) => (
-            <div
-              key={item.id}
-              className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition duration-300"
-            >
-              <img src={item.imgUrl} alt={item.name} className="h-60 w-full object-cover" />
-
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">{item.name}</h3>
-
-                <p className="text-gray-500 text-sm mb-3">
-                  {item.location} • {item.Type?.name}
-                </p>
-
-                <div className="flex justify-between items-center">
-                  <span className="text-emerald-600 font-bold text-lg">
-                    Rp{item.price.toLocaleString('id-ID')}
-                    <span className="text-sm text-gray-400 font-normal"> / month</span>
-                  </span>
-
-                  <button
-                    onClick={() => navigate(`/detail/${item.id}`)}
-                    className="bg-emerald-600 text-white px-4 py-2 rounded-lg hover:bg-emerald-700 transition"
-                  >
-                    View
-                  </button>
-                </div>
-              </div>
-            </div>
+          {lodges.map((lodge) => (
+            <LodgeCard key={lodge.id} lodge={lodge} />
           ))}
         </div>
       </section>
 
+      {/* PAGINATION */}
       <section className="max-w-7xl mx-auto px-6 pb-16">
         <div className="flex justify-center items-center space-x-3">
           <button
