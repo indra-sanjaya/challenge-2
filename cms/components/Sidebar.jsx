@@ -1,6 +1,13 @@
-import { NavLink } from 'react-router';
+import { NavLink, useNavigate } from 'react-router';
 
 export default function Sidebar() {
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate('/login');
+  };
+
   return (
     <nav
       className="col-md-3 col-lg-2 d-md-block sidebar collapse vh-100"
@@ -68,7 +75,11 @@ export default function Sidebar() {
           </li>
 
           <li className="nav-item">
-            <NavLink to="/login" className="nav-link d-flex align-items-center text-danger rounded-3 px-3 py-2">
+            <NavLink
+              to="/login"
+              onClick={handleLogout}
+              className="nav-link d-flex align-items-center text-danger rounded-3 px-3 py-2"
+            >
               <span className="material-symbols-outlined me-3">logout</span>
               Logout
             </NavLink>
