@@ -1,36 +1,56 @@
+import { useState, useEffect } from 'react';
 import Button from './Button';
-import { useState } from 'react';
+import axios from 'axios';
+import { NavLink } from 'react-router';
 
-export default function ProductForm({ tag }) {
+export default function ProductForm({ onSubmit, initialData }) {
   const [cancelHover, setCancelHover] = useState(false);
+  const [types, setTypes] = useState([]);
 
   const [form, setForm] = useState({
-    name: '',
-    facility: '',
-    roomCapacity: 1,
-    imgUrl: '',
-    location: '',
-    price: 0,
-    typeId: '',
+    name: initialData?.name || '',
+    facility: initialData?.facility || '',
+    roomCapacity: initialData?.roomCapacity || 1,
+    imgUrl: initialData?.imgUrl || '',
+    location: initialData?.location || '',
+    price: initialData?.price || 0,
+    typeId: initialData?.typeId || '',
   });
+
+  // Fetch room types from API with token
+  useEffect(() => {
+    async function fetchTypes() {
+      try {
+        const { data } = await axios.get('https://challenge.rundevrun.online/type', {
+          headers: { Authorization: `Bearer ${localStorage.access_token}` },
+        });
+        setTypes(data.data); // set API data
+      } catch (error) {
+        console.log(error);
+      }
+    }
+
+    fetchTypes();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     setForm({
       ...form,
-      [name]: value,
+      [name]: name === 'roomCapacity' || name === 'price' || name === 'typeId' ? parseInt(value) : value,
     });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit(form); // send form data to parent
   };
 
   return (
     <form
-      id="product-form"
+      onSubmit={handleSubmit}
       className="p-5 rounded-4 shadow-lg bg-white"
-      style={{
-        maxWidth: '750px',
-        margin: '0 auto',
-        border: '1px solid rgba(0,0,0,0.05)',
-      }}
+      style={{ maxWidth: '750px', margin: '0 auto', border: '1px solid rgba(0,0,0,0.05)' }}
     >
       {/* NAME */}
       <div className="mb-3">
@@ -89,9 +109,11 @@ export default function ProductForm({ tag }) {
           <option value="" disabled>
             -- Select Type --
           </option>
-          <option value={1}>Boarding Room</option>
-          <option value={2}>Apartment</option>
-          <option value={3}>Studio</option>
+          {types.map((t) => (
+            <option key={t.id} value={t.id}>
+              {t.name}
+            </option>
+          ))}
         </select>
       </div>
 
@@ -144,10 +166,9 @@ export default function ProductForm({ tag }) {
       {/* BUTTONS */}
       <div className="row mt-5 mb-3">
         <div className="col-6">
-          <a
-            className="btn w-100 py-3 rounded-pill fw-semibold shadow-sm border-0 
-             d-flex align-items-center justify-content-center 
-             text-decoration-none"
+          <NavLink
+            to={'/products'}
+            className="btn w-100 py-2 rounded-pill fw-semibold shadow-sm border-0"
             style={{
               background: cancelHover
                 ? 'linear-gradient(90deg,#f3f4f6,#e5e7eb)'
@@ -158,14 +179,13 @@ export default function ProductForm({ tag }) {
             }}
             onMouseEnter={() => setCancelHover(true)}
             onMouseLeave={() => setCancelHover(false)}
-            href=""
           >
             Cancel
-          </a>
+          </NavLink>
         </div>
 
         <div className="col-6">
-          <Button tag={tag} />
+          <Button />
         </div>
       </div>
     </form>

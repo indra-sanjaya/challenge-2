@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NavLink } from 'react-router';
 import PreLoader from '../components/PreLoader';
+import Toastify from 'toastify-js';
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -10,9 +11,8 @@ export default function Products() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const token = localStorage.getItem('access_token');
         const { data } = await axios.get('https://challenge.rundevrun.online/lodging', {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${localStorage.access_token}` },
         });
 
         setProducts(data.data);
@@ -25,6 +25,44 @@ export default function Products() {
 
     fetchProducts();
   }, []);
+
+  const handleDelete = async (id) => {
+    try {
+      const { data } = await axios.delete(`https://challenge.rundevrun.online/lodging/${id}`, {
+        headers: { Authorization: `Bearer ${localStorage.access_token}` },
+      });
+
+      setProducts(products.filter((p) => p.id !== id));
+
+      Toastify({
+        text: `Succeed delete data ${data.data.name}`,
+        duration: 3000,
+        newWindow: true,
+        close: true,
+        gravity: 'top', // `top` or `bottom`
+        position: 'center', // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+          background: '#34D399',
+          color: '#000000',
+        },
+      }).showToast();
+    } catch (error) {
+      Toastify({
+        text: error.response.data.message,
+        duration: 3000,
+        newWindow: true,
+        close: true,
+        gravity: 'top', // `top` or `bottom`
+        position: 'center', // `left`, `center` or `right`
+        stopOnFocus: true, // Prevents dismissing of toast on hover
+        style: {
+          background: '#F87171',
+          color: '#000000',
+        },
+      }).showToast();
+    }
+  };
 
   if (loading) return <PreLoader />;
 
@@ -100,6 +138,7 @@ export default function Products() {
                     <div className="d-flex justify-content-center gap-2">
                       {/* Delete */}
                       <button
+                        onClick={() => handleDelete(item.id)}
                         className="btn btn-sm btn-danger d-flex align-items-center justify-content-center rounded-circle shadow-sm"
                         title="Delete"
                       >

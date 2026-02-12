@@ -35,12 +35,12 @@ export default function RegisterForm() {
       navigate('/products');
 
       Toastify({
-        text: `Succeed add data ${data.data.name}`,
+        text: `Succeed add data with email ${data.data.email}`,
         duration: 3000,
         newWindow: true,
         close: true,
-        gravity: 'bottom', // `top` or `bottom`
-        position: 'right', // `left`, `center` or `right`
+        gravity: 'top', // `top` or `bottom`
+        position: 'center', // `left`, `center` or `right`
         stopOnFocus: true, // Prevents dismissing of toast on hover
         style: {
           background: '#34D399',
@@ -53,8 +53,8 @@ export default function RegisterForm() {
         duration: 3000,
         newWindow: true,
         close: true,
-        gravity: 'bottom', // `top` or `bottom`
-        position: 'right', // `left`, `center` or `right`
+        gravity: 'top', // `top` or `bottom`
+        position: 'center', // `left`, `center` or `right`
         stopOnFocus: true, // Prevents dismissing of toast on hover
         style: {
           background: '#F87171',
