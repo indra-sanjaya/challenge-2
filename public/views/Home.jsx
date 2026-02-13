@@ -17,7 +17,7 @@ export default function Home() {
   useEffect(() => {
     async function fetchTypes() {
       try {
-        const { data } = await axios.get('http://challenge.rundevrun.online/pub/type');
+        const { data } = await axios.get('https://challenge.rundevrun.online/pub/type');
         setTypes(data.data);
       } catch (error) {
         console.log(error);
@@ -29,7 +29,7 @@ export default function Home() {
   useEffect(() => {
     async function fetchLodges() {
       try {
-        const { data } = await axios.get('http://challenge.rundevrun.online/pub', {
+        const { data } = await axios.get('https://challenge.rundevrun.online/pub', {
           params: { page, search, sort, typeId },
         });
         setLodges(data.data);

@@ -26,10 +26,10 @@ export default function Detail() {
   useEffect(() => {
     async function fetchData() {
       try {
-        const { data } = await axios.get(`http://challenge.rundevrun.online/pub/${id}`);
+        const { data } = await axios.get(`https://challenge.rundevrun.online/pub/${id}`);
         setLodge(data.data);
 
-        const res = await axios.get(`http://challenge.rundevrun.online/pub`);
+        const res = await axios.get(`https://challenge.rundevrun.online/pub`);
         const others = res.data.data.filter((item) => item.id !== +id);
         setRelatedLodges(others.slice(0, 25));
       } catch (error) {
