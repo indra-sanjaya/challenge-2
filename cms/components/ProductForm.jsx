@@ -166,7 +166,7 @@ export default function ProductForm({ onSubmit, initialData }) {
       <div className="row mt-5 mb-3">
         <div className="col-6">
           <NavLink
-            to={'/products'}
+            to={'/'}
             className="btn w-100 py-2 rounded-pill fw-semibold shadow-sm border-0"
             style={{
               background: cancelHover
