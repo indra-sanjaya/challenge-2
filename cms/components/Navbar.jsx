@@ -1,3 +1,5 @@
+import pic from '../src/assets/react.svg';
+
 export default function Navbar() {
   return (
     <header
@@ -11,7 +13,7 @@ export default function Navbar() {
     >
       {/* Left Section */}
       <div className="d-flex align-items-center">
-        <img src="../src/assets/react.svg" width={40} className="me-3" alt="IDEA" />
+        <img src={pic} width={40} className="me-3" alt="IDEA" />
         <span className="fw-bold text-white" style={{ letterSpacing: '0.5px' }}>
           Admin Panel
         </span>
