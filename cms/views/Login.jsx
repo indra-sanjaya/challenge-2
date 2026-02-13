@@ -16,7 +16,7 @@ export default function Login() {
 
       localStorage.setItem('access_token', data.access_token);
 
-      navigate('/products');
+      navigate('/');
 
       Toastify({
         text: 'Login success',
@@ -62,7 +62,7 @@ export default function Login() {
         color: '#000000',
       },
     }).showToast();
-    return <Navigate to="/products" />;
+    return <Navigate to="/" />;
   }
 
   return (

@@ -32,7 +32,7 @@ export default function RegisterForm() {
         },
       });
 
-      navigate('/products');
+      navigate('/');
 
       Toastify({
         text: `Succeed add data with email ${data.data.email}`,

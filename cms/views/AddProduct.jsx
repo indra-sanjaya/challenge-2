@@ -14,7 +14,7 @@ export default function AddProduct() {
         },
       });
 
-      navigate('/products');
+      navigate('/');
 
       Toastify({
         text: `Succeed add data ${data.data.name}`,

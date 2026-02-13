@@ -19,7 +19,7 @@ export default function Sidebar() {
         <ul className="nav flex-column gap-2">
           <li className="nav-item">
             <NavLink
-              to="/products"
+              to="/"
               className={({ isActive }) =>
                 `nav-link d-flex align-items-center text-white rounded-3 px-3 py-2 ${
                   isActive ? 'bg-white bg-opacity-10' : ''

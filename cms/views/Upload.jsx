@@ -55,7 +55,7 @@ export default function Upload() {
         },
       });
 
-      navigate('/products');
+      navigate('/');
 
       Toastify({
         text: 'Image uploaded successfully!',
@@ -67,9 +67,8 @@ export default function Upload() {
 
       setProduct({ ...product, imgUrl: data.data });
     } catch (error) {
-      console.log(error);
       Toastify({
-        text: 'Failed to upload image',
+        text: error.response.data.message,
         duration: 3000,
         gravity: 'top',
         position: 'center',
