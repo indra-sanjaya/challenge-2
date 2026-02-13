@@ -1,7 +1,7 @@
 export default function PreLoader() {
   return (
     <>
-      <div id="preloader" style={{ display: 'none' }}>
+      <div id="preloader">
         <div className="loading">
           <lottie-player
             src="https://assets2.lottiefiles.com/packages/lf20_remmdtqv.json"

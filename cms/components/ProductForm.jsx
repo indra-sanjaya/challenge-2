@@ -17,14 +17,13 @@ export default function ProductForm({ onSubmit, initialData }) {
     typeId: initialData?.typeId || '',
   });
 
-  // Fetch room types from API with token
   useEffect(() => {
     async function fetchTypes() {
       try {
         const { data } = await axios.get('https://challenge.rundevrun.online/type', {
           headers: { Authorization: `Bearer ${localStorage.access_token}` },
         });
-        setTypes(data.data); // set API data
+        setTypes(data.data);
       } catch (error) {
         console.log(error);
       }
@@ -43,7 +42,7 @@ export default function ProductForm({ onSubmit, initialData }) {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit(form); // send form data to parent
+    onSubmit(form);
   };
 
   return (

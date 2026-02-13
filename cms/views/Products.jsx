@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { NavLink } from 'react-router';
-import PreLoader from '../components/PreLoader';
 import Toastify from 'toastify-js';
 
 export default function Products() {
@@ -64,7 +63,7 @@ export default function Products() {
     }
   };
 
-  if (loading) return <PreLoader />;
+  if (loading) return <p className="text-center mt-5">Loading...</p>;
 
   return (
     <section

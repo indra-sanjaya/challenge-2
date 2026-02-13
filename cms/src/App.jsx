@@ -1,5 +1,4 @@
 import Login from '../views/Login';
-import PreLoader from '../components/PreLoader';
 import Products from '../views/Products';
 import AddProduct from '../views/AddProduct';
 import Upload from '../views/Upload';
@@ -12,7 +11,6 @@ import BaseLayout from '../views/BaseLayout';
 function App() {
   return (
     <>
-      <PreLoader />
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
